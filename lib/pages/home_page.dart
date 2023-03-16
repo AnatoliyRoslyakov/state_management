@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:state_management/business/cubit/product_cubit.dart';
 import 'package:state_management/services/repositiry_product.dart';
 
-import '../business/bloc/product_bloc.dart';
-import '../model/product.dart';
+import '../business/bloc/counter_bloc.dart';
 import '../widgets/list_products.dart';
 import '../widgets/shopping_button.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
+  
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
         BlocProvider(
           create: (context) => CounterBloc(),
         ),
+        // BlocProvider(create: (context) => CartBloc(),)
       ],
       child: Scaffold(
         appBar: AppBar(

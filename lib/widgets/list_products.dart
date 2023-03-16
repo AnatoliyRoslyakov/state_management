@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../business/bloc/product_bloc.dart';
 
+
+import '../business/bloc/counter_bloc.dart';
 import '../business/cubit/product_cubit.dart';
 import '../business/cubit/product_state.dart';
-import '../services/repositiry_product.dart';
 
 class ListProducts extends StatefulWidget {
   const ListProducts({super.key});
@@ -36,7 +36,7 @@ class _ListProductsState extends State<ListProducts> {
               );
             }));
       }
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     });
   }
 }

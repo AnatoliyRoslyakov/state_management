@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../business/bloc/product_bloc.dart';
+import '../business/bloc/counter_bloc.dart';
 import '../business/bloc/product_state.dart';
 
 class ShoppingPage extends StatelessWidget {

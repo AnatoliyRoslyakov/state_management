@@ -1,13 +1,23 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class CounterEvent {}
+import 'product_event.dart';
+import 'product_state.dart';
 
-class CounterIncrementPressed extends CounterEvent {}
+class CartBloc extends Bloc<CartEvent, CartState> {
+  CartBloc() : super(ProductAdded(cartItem: [])){
 
-class AddProducttitlePressed extends CounterEvent {}
+    on<AddProduct>((event, emit){
+      _cartItems.add(event.productIndex);
+       emit(ProductAdded(cartItem: _cartItems));
+    });
 
-class CounterBloc extends Bloc<CounterEvent, int> {
-  CounterBloc() : super(0) {
-    on<CounterIncrementPressed>((event, emit) => emit(state + 1));
+    on<RemoveProduct>((event, emit){
+      _cartItems.remove(event.productIndex);
+       emit(ProductRemoved(cartItem: _cartItems));
+    });
   }
+
+  final List<int> _cartItems = [];
+  List<int> get items => _cartItems;
+
 }
