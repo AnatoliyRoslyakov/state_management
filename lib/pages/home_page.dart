@@ -5,12 +5,13 @@ import 'package:state_management/business/cubit/product_cubit.dart';
 import 'package:state_management/services/repositiry_product.dart';
 
 import '../business/bloc/counter_bloc.dart';
+import '../business/bloc/product_bloc.dart';
 import '../widgets/list_products.dart';
 import '../widgets/shopping_button.dart';
+import 'shopping_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-  
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,14 +25,12 @@ class _HomePageState extends State<HomePage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ProductCubit(
-            productRepositiry: productRepository,
-          ),
-        ),
+            create: (context) =>
+                ProductCubit(productRepositiry: productRepository)),
+        BlocProvider(create: (context) => CounterBloc()),
         BlocProvider(
-          create: (context) => CounterBloc(),
-        ),
-        // BlocProvider(create: (context) => CartBloc(),)
+          create: (context) => CartBloc(),
+        )
       ],
       child: Scaffold(
         appBar: AppBar(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
-
 import '../business/bloc/counter_bloc.dart';
+import '../business/bloc/product_bloc.dart';
+import '../business/bloc/product_event.dart';
 import '../business/cubit/product_cubit.dart';
 import '../business/cubit/product_state.dart';
 
@@ -41,7 +41,7 @@ class _ListProductsState extends State<ListProducts> {
   }
 }
 
-class CardProduct extends StatelessWidget {
+class CardProduct extends StatefulWidget {
   const CardProduct({
     super.key,
     required this.state,
@@ -52,7 +52,14 @@ class CardProduct extends StatelessWidget {
   final int index;
 
   @override
+  State<CardProduct> createState() => _CardProductState();
+}
+
+class _CardProductState extends State<CardProduct> {
+  @override
   Widget build(BuildContext context) {
+    var cartList = BlocProvider.of<CartBloc>(context).items;
+    int itemNo = widget.state.isLoaded[widget.index].id;
     return Card(
       elevation: 8,
       shadowColor: const Color.fromARGB(255, 244, 54, 70),
@@ -64,23 +71,27 @@ class CardProduct extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(state.isLoaded[index].title,
+          child: Text(widget.state.isLoaded[widget.index].title,
               style: const TextStyle(fontWeight: FontWeight.w700)),
         ),
-        Image.network(state.isLoaded[index].image,
+        Image.network(widget.state.isLoaded[widget.index].image,
             height: 200, fit: BoxFit.cover),
         ElevatedButton(
+          key: Key('icon_$itemNo'),
           onPressed: () {
-            final product = state.isLoaded[index].title;
-            context.read<CounterBloc>().add(CounterIncrementPressed());
-            // BlocProvider.of<ProductListBloc>(context).add()
+            cartList.contains(widget.state.isLoaded[widget.index].id)
+                ? BlocProvider.of<CartBloc>(context).add(RemoveProduct(itemNo))
+                : BlocProvider.of<CartBloc>(context).add(AddProduct(itemNo));
+            setState(() {});
           },
           style: ButtonStyle(
               backgroundColor:
                   MaterialStateProperty.all(Color.fromARGB(255, 54, 33, 243)),
               overlayColor: MaterialStateProperty.all(
                   const Color.fromARGB(255, 244, 54, 70))),
-          child: const Text('Add to Cart'),
+          child: cartList.contains(widget.state.isLoaded[widget.index].id)
+              ? Icon(Icons.delete)
+              : Icon(Icons.shopping_cart),
         ),
       ]),
     );

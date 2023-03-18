@@ -10,7 +10,8 @@ abstract class CartState {
 
 class CartLoadInProgress extends CartState {
   final List<int> cartItem;
-  const CartLoadInProgress({required this.cartItem}) : super(cartItem: cartItem);
+  const CartLoadInProgress({required this.cartItem})
+      : super(cartItem: cartItem);
 }
 
 class ProductAdded extends CartState {
