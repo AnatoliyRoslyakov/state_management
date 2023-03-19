@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:state_management/business/cubit/product_cubit.dart';
-import 'package:state_management/services/repositiry_product.dart';
-
-import '../business/bloc/counter_bloc.dart';
-import '../business/bloc/product_bloc.dart';
 import '../widgets/list_products.dart';
 import '../widgets/shopping_button.dart';
-import 'shopping_page.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,21 +11,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final productRepository = RepositoryProduct();
+  
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-            create: (context) =>
-                ProductCubit(productRepositiry: productRepository)),
-        BlocProvider(create: (context) => CounterBloc()),
-        BlocProvider(
-          create: (context) => CartBloc(),
-        )
-      ],
-      child: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: Text("Simple State Management"),
@@ -52,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           children: [Expanded(child: ListProducts())],
         ),
         floatingActionButton: ShoppingButton(),
-      ),
-    );
+      );
+    
   }
 }
